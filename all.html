@@ -37,8 +37,14 @@
         </div>
 </div>
 <div class="row">
+    <div class="col-sm-9">
         <div id="main3" style="height:300px;">
         </div>
+    </div>    
+    <div class="col-sm-3">
+        <div id="main32" style="height:300px;">
+        </div>
+    </div> 
 </div>
 
 </div>  
@@ -51,6 +57,7 @@
     var myChart1 = echarts.init(document.getElementById('main1'),'dark');
     var myChart2 = echarts.init(document.getElementById('main2'),'dark');
     var myChart3 = echarts.init(document.getElementById('main3'),'dark');
+     var myChart32 = echarts.init(document.getElementById('main32'),'dark');
     var myChart4 = echarts.init(document.getElementById('main4'),'dark');
     var myChart5 = echarts.init(document.getElementById('main5'),'dark');
    // myChart.showLoading();
@@ -104,7 +111,7 @@ var option = {
 // 使用刚指定的配置项和数据显示图表。
 myChart1.setOption(option);
 
-// 指定图表的配置项和数据
+//指定图表的配置项和数据
 var option = {
     backgroundColor: '#034769',
     title : {
@@ -151,85 +158,219 @@ myChart2.setOption(option);
 
 
 
+//提示框体
+function tooltipFormatter(params) {
+    var valuesFormatter = [];
+    if (params.componentSubType == 'pie') {
+        valuesFormatter
+            .push('<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
+                '本日销量' +
+                '<br>' +
+                '</div>' +
+                '<span style="color:' +
+                params.color +
+                '">' + params.name + '</span>: ' + params.value);
+    } else {
+        valuesFormatter
+            .push('<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
+                params.seriesName +
+                '</div>' +
+                '<span style="color:' +
+                params.color +
+                '">' +
+                params.name +
+                '</span>: ' +
+                params.value + '<br>');
+    }
 
+    return valuesFormatter;
+}
 
 
 option = {
-     backgroundColor: '#034769',
+    backgroundColor: '#034769',
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            crossStyle: {
-                color: '#999'
-            }
-        }
-    },
-    toolbox: {
-        feature: {
-            // dataView: {show: true, readOnly: false},
-            // magicType: {show: true, type: ['line', 'bar']},
-            // restore: {show: true},
-            // saveAsImage: {show: true}
-        }
+           trigger: 'item',
+                   padding: 10,
+            backgroundColor: '#222',
+            borderColor: '#777',
+            borderWidth: 1,
+            formatter: tooltipFormatter
     },
     legend: {
-        data:['蒸发量','降水量','平均温度']
+        //data:['评价分','大唐集团','华东集团']
+    },
+    grid: {
+        left: '2%',
+        right: '2%',
+        bottom: '10%',
+        containLabel: true
     },
     xAxis: [
         {
             type: 'category',
-            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            data: ['台州厂','温二厂','温州厂','乌沙山','萧山厂','玉环厂','镇海厂','舟山厂','衢化厂','半燃厂','德能厂','华舜厂','蓝天厂','龙湾厂','黄水厂','紧水厂','石水厂'],
             axisPointer: {
                 type: 'shadow'
+            },
+            axisLine: {
+                lineStyle: {
+                    type: 'solid',
+                    color: '#28316d',//左边线的颜色
+                    width:'1'//坐标线的宽度
+                }
+            },
+            axisLabel:  {
+                interval: 0,
+                rotate:40,
+                show: true,
+                splitNumber: 15,
+                textStyle: {
+                    //fontFamily: "微软雅黑",
+                    fontSize: 10,
+                },
+            },
+            axisTick: {
+                alignWithLabel: true
             }
         }
     ],
     yAxis: [
         {
             type: 'value',
-            name: '水量',
+            name: '评价分数',
             min: 0,
-            max: 250,
-            interval: 50,
+            max: 100,
+            interval: 20,
+            splitLine: {                // 网格线 y轴对应的是否显示
+                show: false
+            },
             axisLabel: {
-                formatter: '{value} ml'
-            }
-        },
-        {
-            type: 'value',
-            name: '温度',
-            min: 0,
-            max: 25,
-            interval: 5,
-            axisLabel: {
-                formatter: '{value} °C'
+                formatter: '{value} '
             }
         }
     ],
     series: [
         {
-            name:'蒸发量',
+            name:'评价分',
             type:'bar',
-            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-        },
-        {
-            name:'降水量',
-            type:'bar',
-            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-        },
-        {
-            name:'平均温度',
-            type:'line',
-            yAxisIndex: 1,
-            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+            data:[60, 49, 70,88,33,44,55,65,99,37,74,43,70,88,33,44,55],
+            label: {
+                normal: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{c}'
+
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'normal'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 3,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+
         }
+
     ]
 };
 
 myChart3.setOption(option);
 
 
+option = {
+    backgroundColor: '#034769',
+    color: ['#3398DB'],
+    title: {
+        text: '各集团平均分',
+        //textStyle: {
+        //    color: '#fff'
+        //}
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        },
+        formatter: "{b} <br> 集团平均分: {c}"
+    },
+    /*legend: {
+        data: [date]
+    },*/
+    grid: {
+        left: '2%',
+        right: '10%',
+        bottom: '10%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01],
+        min: 0,
+        max: 100,
+        interval: 20,
+        axisLabel: {
+            formatter: '{value}',
+            textStyle: {
+                //color: '#fff',  
+                fontWeight: '80'
+            }
+        }
+    },
+    yAxis: {
+        type: 'category',
+        data: ['大唐', '华能', '浙能', '华东', '国电', '山东', '广东'],
+        axisLabel: {
+            show: true,
+            interval: 0,
+            rotate: 0,
+            margin: 10,
+            inside: false,
+            textStyle: {
+                //color: '#fff',
+                fontWeight: '50'
+            }
+        }
+    },
+    series: [{
+        type: 'bar',
+        label: {
+            normal: {
+                show: true,
+                // formatter: '{c}',
+                formatter: function(v) {
+                    var val = v.data;
+                    if (val == 0) {
+                        return '';
+                    }
+                    return val;
+                },
+                color: '#fff'
+            }
+        },
+        data: [22, 33, 44, 55, 66, 77, 88]
+    }]
+};
+
+myChart32.setOption(option);
 
 option = {
      backgroundColor: '#034769',
@@ -298,23 +439,49 @@ option = {
 myChart4.setOption(option);
 
 option = {
+    title: {
+        text: '全网负荷有功',
+        left: '3%'
+    },
     tooltip : {
         trigger: 'axis'
     },
     calculable : true,
     backgroundColor: '#034769',
+        grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
     xAxis: {
         type: 'category',
-        data: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00','14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
+        data: ['00:00', '01:00', '02:00', '03:00','04:00', '05:00','06:00', '07:00','08:00', '09:00','10:00', '11:00','12:00','13:00','14:00', '15:00','16:00', '17:00','18:00','19:00', '20:00','21:00', '22:00', '23:00','24:00'],
+      scale: true,
+      boundaryGap: false,
+      axisLine: { onZero: false },
+      splitLine: { show: false },
+      splitNumber: 20,
+      min: 'dataMin',
+      max: 'dataMax'
     },
     yAxis: {
         type: 'value',
+        name: '负荷(MW)',
+        min: 20000,
+        interval: 5000,
         show:true
     },
     series: [{
-        data: [120, 932, 901, 934, 1290, 930, 320,120, 932, 901, 934, 1290, 1330],
+        data: [ 25901, 33934, 41440, 43930,55440, 34932, 35901, 41934, 41290, 41300, 33901, 44934, 31440, 33930,44440, 29932, 38901, 39934, 51290, 31300, 41290, 51330, 31290, 31330,31111],
         type: 'line',
-        smooth: true
+        smooth: true,
+                  markPoint: {
+              data: [
+                  {type: 'max', name: '最大值'},
+                  {type: 'min', name: '最小值'}
+              ]
+          },
     }]
 };
 myChart5.setOption(option);

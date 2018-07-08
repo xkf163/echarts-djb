@@ -151,24 +151,25 @@ var mapData =  [{
 var f = [[
         {
           "coord": [
-            121.150877,28.100905
+            119.774865,31.058723
           ]
         },
         {
           "coord": [
-            120.182748,30.220624
+            119.487407,29.719961
           ]
         }
       ],
       [
         {
           "coord": [
-            121.150877,28.100905
+            //121.150877,28.100905
+            119.487407,29.719961
           ]
         },
         {
           "coord": [
-           120.955661,30.516701
+           120.424519,27.68179
           ],
            "value": 75
         }
@@ -291,35 +292,35 @@ var f = [[
 
 
 
-      markLine : {
-              Symbol:['none', 'arrow'],
-              symbolSize:['0', '0.1'],
-              smooth:true,
-              smooth:0,
-              effect : {
-                  show: true,
-                  scaleSize: 1,
-                  period: 30,
-                  color: '#fff',
-                  shadowBlur: 10
-              },
-              itemStyle : {
-                  color: 'red',
-                  normal: {
-                      color:function(param){
-                        return('param.colorValue');
-                      },
-                      borderWidth:3,
-                      lineStyle: {
-                          type: 'solid',
-                          width: 1,
-                          shadowBlur: 5
-                      },
+      // markLine : {
+      //         Symbol:['none', 'arrow'],
+      //         symbolSize:['0', '0.1'],
+      //         smooth:true,
+      //         smooth:0,
+      //         effect : {
+      //             show: true,
+      //             scaleSize: 1,
+      //             period: 30,
+      //             color: '#fff',
+      //             shadowBlur: 10
+      //         },
+      //         itemStyle : {
+      //             color: 'red',
+      //             normal: {
+      //                 color:function(param){
+      //                   return('param.colorValue');
+      //                 },
+      //                 borderWidth:3,
+      //                 lineStyle: {
+      //                     type: 'solid',
+      //                     width: 1,
+      //                     shadowBlur: 5
+      //                 },
                       
-                }
-              },
-              data : g
-      },
+      //           }
+      //         },
+      //         data : g
+      // },
       // markPoint:{
       //       //symbol:'arrow',
       //       symbolSize:function(v){
@@ -389,12 +390,12 @@ var f = [[
             show: true,
             period: 6,
             trailLength: 0.7,
-            color: 'red',
-            symbolSize: 3
+            color: 'gold',
+            symbolSize: 4
         },
         lineStyle: {
             normal: {
-                color: 'green',
+                color: 'gold',
                 width: 0,
                 curveness: 0
             }
@@ -412,12 +413,12 @@ var f = [[
                             period: 6,
                             trailLength: 0,
                             symbol: 'arrow',
-                            symbolSize: 6
+                            symbolSize: 4
                         },
                         lineStyle: {
                             normal: {
-                                color: 'green',
-                                width: 1,
+                                color: 'gold',
+                                width: 2,
                                 opacity: 0.6,
                                 curveness: 0
                             }

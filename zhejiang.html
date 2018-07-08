@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+       <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <title>ECharts map Demo</title>
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: #034769;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+      <blockquote  style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">73.33</h2><small>全网日均发电负荷率</small></p>
+      </blockquote>
+    </div>
+    <div class="col-md-2">
+      <blockquote style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">70.24</h2></p>
+        <footer>全网高峰平均负荷率 <cite title="Source Title"></cite></footer>
+      </blockquote>
+    </div>
+    <div class="col-md-2">
+      <blockquote  style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">69.13</h2><small>全网低谷平均负荷率</small></p>
+      </blockquote>
+    </div>
+    <div class="col-md-2">
+      <blockquote  style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">82.355</h2></p>
+        <footer>全网用电负荷率<cite title="Source Title"></cite></footer>
+      </blockquote>
+    </div>
+    <div class="col-md-2">
+      <blockquote  style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">73.33</h2><small>全网日均发电负荷率</small></p>
+      </blockquote>
+    </div>
+    <div class="col-md-2">
+      <blockquote style="margin: 0px;padding: 0px;">
+        <p><h2 style="color: white">70.24</h2></p>
+        <footer>全网高峰平均负荷率 <cite title="Source Title"></cite></footer>
+      </blockquote>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" id="main" style="height:600px"></div>
+      <div class="col-md-8" style="height:600px">
+        <iframe src="all.html" name="iframe_a" frameborder="0" style="width:100%;height:90%"></iframe>
+      </div>
+    </div>
+
+</div>
+<script src='./jquery.min.js'></script>
+<script src='./echarts.min.js'></script>
+<script src='./zhejiang.js'></script>
+<script>  
+var zoom = 1; //地图放大级别
+var myChart = echarts.init(document.getElementById('main'),'dark');
+var chartData = [{name:'玉环电厂',value:[121.150877,28.100905,2],symbol:'circle',symbolSize :20},
+                {name:'台州发电厂',value:[121.467133,28.705202,2],symbol:'circle',symbolSize :15},
+                {name:'紧水滩',value:[119.542836,28.216605,1],symbol:'circle',symbolSize :5},
+                {name:'北仑电厂',value:[121.818637,29.942776,2],symbol:'circle'},
+                {name:'秦山核电',value:[120.955661,30.516701,3],symbol:'circle'},
+                {name:'舒能光伏',value:[120.69826,30.27687,4],symbol:'circle',symbolSize :25},
+                {name:'维新风电场',value:[120.182748,30.220624,5],symbol:'circle'},
+                {name:'温州发电厂',value:[120.750174,27.97839,2],symbol:'circle'}];
+
+var mapData =  [{
+            "name" : "丽水市",
+            "value" : 8
+        }, {
+            "name" : "台州市",
+            "value" : 10
+        }, {
+            "name" : "杭州市",
+            "value" : 8
+        }, {
+            "name" : "舟山市",
+            "value" : 4
+        }, {
+            "name" : "温州市",
+            "value" : 7
+        }, {
+            "name" : "衢州市",
+            "value" : 6
+        }, {
+            "name" : "金华市",
+            "value" : 5
+        }, {
+            "name" : "绍兴市",
+            "value" : 4
+        }, {
+            "name" : "嘉兴市",
+            "value" : 3
+        }, {
+            "name" : "宁波市",
+            "value" : 2
+        }, {
+            "name" : "湖州市",
+            "value" : 1
+        }]             
+
+ var moveLines = [{
+    "fromName": "玉环电厂",
+    "toName": "维新风电场",
+    "coords": [
+      [121.150877,28.100905],
+      [120.182748,30.220624]
+    ]},{
+    "fromName": "紧水滩",
+    "toName": "秦山核电",
+    "coords": [
+      [121.818637,29.942776],
+      [120.955661,30.516701]
+    ]}];
+
+  var option = {
+    backgroundColor: '#034769',
+    // title: {
+    //     text: '浙江分布图',
+    //     subtext: 'data from macrofocus',
+    //     // sublink: 'https://www.macrofocus.com/public/products/infoscope/datasets/pricesandearnings/',
+    //     left: 'center',
+    //     top: 20,
+    //     itemGap: 0,
+    //     textStyle: {
+    //         color: '#fff'
+    //     },
+    //     z: 200
+    // },
+        legend: {
+        show: false,
+        orient: 'vertical',
+        top: 'bottom',
+        left: 'right',
+        data: ['地点', '数量'],
+        textStyle: {
+            color: '#fff'
+        }
+    },
+tooltip: {
+        trigger: 'item',
+      },
+    toolbox: {
+        show: true,
+        iconStyle: {
+            normal: {
+                borderColor: '#ddd'
+            }
+        },
+        feature: {
+            // saveAsImage: {
+            //     show: true
+            // }
+        },
+        z: 202
+    },
+           visualMap: [{
+            show: false,
+            min: 0,
+            max: 10,
+            left: 'left',
+            top: 'bottom',
+            text: ['高','低'], // 文本，默认为数值文本
+            calculable: true,
+            seriesIndex:0,   //多个series组成元素，此颜色配置范围只用于series[0]
+            inRange: {
+               // color: ['lightskyblue', 'yellow', 'orange']
+              color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            }
+        },
+     {
+        show:false,
+        type: 'piecewise', // 定义为分段型 visualMap
+        // min: 0,
+        // max: 2,
+        // splitNumber: 2,
+        pieces: [
+          {value: 1, label: '水电', color: '#FFB800'}, 
+          {value: 2, label: '火电', color: '#BF4E30'}, 
+          {value: 3, label: '核电', color: '#6C8CD5'}, 
+          {value: 4, label: '光伏', color: '#39E639'}, 
+          {value: 5, label: '风电', color: 'pink'}, 
+        ],
+        // inRange: {
+        //     color: ['#50a3ba', '#eac736', '#d94e5d']
+        // },
+        seriesIndex:1,
+        textStyle: {
+            color: '#fff'
+        }
+    }],
+    geo: {
+      map: '浙江',
+      label: {
+        emphasis: {
+          show: false,
+        }
+      },
+      zoom:1.25,
+      roam: true,
+      itemStyle: {
+        normal: {
+          areaColor: '#235D79',
+          borderColor: '#63ADD0'
+        },
+        emphasis: {
+          areaColor: '#034769'
+        }
+      },
+      layoutCenter: ['30%', '30%'],
+      // 如果宽高比大于 1 则宽度为 100，如果小于 1 则高度为 100，保证了不超过 100x100 的区域
+      layoutSize: 100
+    },
+    // center: ['50%', '50%'],
+    series: [
+    {
+            name: '数量',
+            type: 'map',
+            map: '浙江',
+            roam: true,
+            zoom: 1.25,
+            label:{
+                normal: {
+                    show:false,
+                },
+                emphasis : {
+                    show : true,
+                    formatter: function (params) {
+                        return params.name;   //此处代替nameMap
+                    }
+                }
+            },
+            // nameMap : nameMap, //使用nameMap时，label显示的会不准确，不在地图中间
+            data: mapData,
+            geoIndex:0,
+        },
+    // {
+    //     name: '线路',
+    //     type: 'lines',
+    //     coordinateSystem: 'geo',
+    //     zlevel: 2,
+    //     large: true,
+    //     effect: {
+    //         show: true,
+    //         constantSpeed: 30,
+    //         symbol: 'pin',
+    //         symbolSize: 3,
+    //         trailLength: 0,
+    //     },
+    //     lineStyle: {
+    //         normal: {
+    //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+    //                     offset: 0, color: '#58B3CC'
+    //                 }, {
+    //                     offset: 1, color: '#F58158'
+    //                 }], false),
+    //             width: 1,
+    //             opacity: 0.2,
+    //             curveness: 0.1
+    //         }
+    //     },
+    //     data: moveLines
+    // },
+        {
+      name: '地点',
+      type: 'effectScatter',
+      coordinateSystem: 'geo',
+      data: chartData,
+      //symbol:'rect', //小图标图形;image://http://xxx.xxx.xxx/a/b.png 自定义图标
+      // symbolSize: function(val) {
+      //   return 10;
+      // },
+      rippleEffect: {
+        period : 3,
+        scale: 3,
+        brushType : 'stroke',
+      },
+      // symbolRotate: 45, //图标旋转角度
+      label: {
+        // normal: {
+        //     formatter: '{b}',
+        //     position: [-20,-20],
+        //     show: true,
+        // },
+        // emphasis: {
+        //     show: true
+        // }
+      },
+      tooltip: {
+        formatter: function (params) {
+              var value = (params.value + '').split('.');
+              value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,') + '.' + value[1];
+              return  params.name + '下 <br/> ' + value;
+          }
+      }
+    }
+
+    // {
+    //     name: 'Top 5',
+    //         type: 'effectScatter',
+    //         coordinateSystem: 'bmap',
+    //         data: chartData,
+    //         symbolSize: function (val) {
+    //             return  10;
+    //         },
+    //         showEffectOn: 'emphasis',
+    //         rippleEffect: {
+    //             brushType: 'stroke'
+    //         },
+    //         hoverAnimation: true,
+    //         label: {
+    //             normal: {
+    //                 formatter: '{b}',
+    //                 position: 'right',
+    //                 show: true
+    //             }
+    //         },
+    //         itemStyle: {
+    //             normal: {
+    //                 color: '#f4e925',
+    //                 shadowBlur: 10,
+    //                 shadowColor: '#333'
+    //             }
+    //         },
+    //         zlevel: 1
+    // }
+    ]
+  }
+
+  myChart.setOption(option)
+
+
+  // 处理点击事件并且跳转到相应的百度搜索页面
+  myChart.on('click', function (params) {
+      console.log(params);
+      if(params.componentType == "series"){
+          //window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+          $('iframe').attr('src','https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+      }
+      
+      if(params.componentType == "geo"){
+         // console.log(zoom == 1);
+         //  if(zoom == 1) {
+         //     zoom = 3;
+         //     myChart.setOption({
+         //          geo: [{
+         //              zoom: 3
+         //          }]
+         //      });
+         //  }else if(zoom == 3) {
+         //     zoom = 1;
+         //     myChart.setOption({
+         //        geo: [{
+         //            zoom: 1
+         //        }]
+         //    });
+         //     $('iframe').attr('src','all.html');
+         //  }
+      } 
+  });
+
+
+ 
+
+ myChart.on('geoselectchanged', function (params) {
+    console.log("geoselectchanged ");
+  });
+  myChart.on('dblclick', function (params) {
+      //双击地图区域放大缩小
+      //console.log(option.geo);
+      var selectProvice = params.name;
+      console.log(selectProvice);
+      if(params.componentType == "geo"){
+          console.log(zoom == 1);
+          if(zoom == 1) {
+             zoom = 3;
+             myChart.setOption({
+                  geo: [{
+                      zoom: 3
+                  }],
+                // center: ['50%', '50%'],
+              });
+          }else if(zoom == 3) {
+             zoom = 1;
+             myChart.setOption({
+                geo: [{
+                    zoom: 1.25
+                }],
+                // center: ['50%', '50%'],
+            });
+   $('iframe').attr('src','all.html');
+          }
+      }
+  });
+
+
+
+
+
+</script>
+
+</body>
+</html>

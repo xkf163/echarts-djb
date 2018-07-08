@@ -1,0 +1,3 @@
+[
+	{ "keys": ["f2"], "command": "side_bar_files_open_with","args": {"paths": [],"application": "C:/Users/ENSOFF/AppData/Local/Google/Chrome/Application/chrome.exe", "extensions":".*" } }
+]

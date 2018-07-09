@@ -750,14 +750,14 @@ myChartlines1.setOption(optionlines1);
 
 //app.title = '柱状图框选';
 
-var xAxisData = [];
-var data1 = [];
-var data2 = [];
+var xAxisData = ['台州厂','温二厂','温州厂','乌沙山','萧山厂','玉环厂','镇海厂','舟山厂','衢化厂','半燃厂','德能厂','华舜厂','蓝天厂','龙湾厂','黄水厂','紧水厂','石水厂'];
+var data1 = [0,9.5,0,0,12,12,10,0,0,0,10.5,8.5,9,8.8,9.5,11.3,0];
+var data2 = [-1,0,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,-1];
 
-for (var i = 0; i < 10; i++) {
-    xAxisData.push('电厂' + i);
-    data1.push((Math.random() * 10));
-    data2.push(-1);
+for (var i = 0; i < 16; i++) {
+    //xAxisData.push('电厂' + i);
+    //data1.push((Math.random() * 10));
+    //data2.push(-1);
 }
 
 var itemStyle = {
@@ -773,12 +773,16 @@ var itemStyle = {
 };
 
 optionup1 = {
-    backgroundColor: '#034769',
-    legend: {
-        data: ['bar', 'bar2'],
-        align: 'left',
-        left: 10
+    title: {
+        text: '发电企业2018年07月09日日报情况',
+        left: 'center'
     },
+    backgroundColor: '#034769',
+    // legend: {
+    //     data: ['bar', 'bar2'],
+    //     align: 'left',
+    //     left: 10
+    // },
     brush: {
         toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
         xAxisIndex: 0
@@ -793,14 +797,26 @@ optionup1 = {
     },
     tooltip: {},
     xAxis: {
+        type: 'category',
         data: xAxisData,
-        name: 'X Axis',
+        // name: 'X Axis',
         silent: false,
         axisLine: {onZero: true},
         splitLine: {show: false},
-        splitArea: {show: false}
+        splitArea: {show: false},
+        axisLabel:  {
+                interval: 0,
+                rotate:40,
+                show: true,
+                splitNumber: 15,
+                textStyle: {
+                    //fontFamily: "微软雅黑",
+                    fontSize: 12,
+                },
+            }
     },
     yAxis: {
+        name: '上报时间',
         inverse: false,
         splitArea: {show: false}
     },

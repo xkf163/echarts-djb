@@ -22,6 +22,22 @@
         </div>
   </div>
   <div class="row">
+        <div id="bar1" style="height:300px;">
+            <!-- 地区最高负荷 -->
+        </div>
+  </div>
+  <div class="row">
+        <div id="lines1" style="height:300px;">
+            <!-- 三大发电来源曲线 -->
+        </div>
+  </div>
+
+  <div class="row">
+        <div id="up1" style="height:500px;">
+            <!-- 日报上报情况 -->
+        </div>
+  </div>
+  <div class="row">
       <div class="col-sm-6">
         <div id="main1" style="height:300px;">
         </div>
@@ -38,11 +54,11 @@
 </div>
 <div class="row">
     <div class="col-sm-9">
-        <div id="main3" style="height:300px;">
+        <div id="main3" style="height:350px;">
         </div>
     </div>    
     <div class="col-sm-3">
-        <div id="main32" style="height:300px;">
+        <div id="main32" style="height:350px;">
         </div>
     </div> 
 </div>
@@ -57,9 +73,14 @@
     var myChart1 = echarts.init(document.getElementById('main1'),'dark');
     var myChart2 = echarts.init(document.getElementById('main2'),'dark');
     var myChart3 = echarts.init(document.getElementById('main3'),'dark');
-     var myChart32 = echarts.init(document.getElementById('main32'),'dark');
+    var myChart32 = echarts.init(document.getElementById('main32'),'dark');
     var myChart4 = echarts.init(document.getElementById('main4'),'dark');
     var myChart5 = echarts.init(document.getElementById('main5'),'dark');
+
+    var myChartbar1 = echarts.init(document.getElementById('bar1'),'dark');
+    var myChartlines1 = echarts.init(document.getElementById('lines1'),'dark');
+
+    var myChartup1 = echarts.init(document.getElementById('up1'),'dark');
    // myChart.showLoading();
    // myChart.showLoading();
 
@@ -189,9 +210,16 @@ function tooltipFormatter(params) {
 
 option = {
     backgroundColor: '#034769',
+    title: {
+        text: '发电企业安全生产综合评分',
+        left:'center'
+        //textStyle: {
+        //    color: '#fff'
+        //}
+    },
     tooltip: {
            trigger: 'item',
-                   padding: 10,
+            padding: 10,
             backgroundColor: '#222',
             borderColor: '#777',
             borderWidth: 1,
@@ -202,8 +230,8 @@ option = {
     },
     grid: {
         left: '2%',
-        right: '2%',
-        bottom: '10%',
+        right: '8%',
+        bottom: '5%',
         containLabel: true
     },
     xAxis: [
@@ -286,7 +314,19 @@ option = {
                     shadowOffsetX: 0,
                     shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
+            },
+             markPoint : {
+              data: [
+                  {type: 'max', name: '最高'},
+                  {type: 'min', name: '最低'}
+              ]                
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均'}
+                ]
             }
+
 
         }
 
@@ -318,7 +358,7 @@ option = {
     grid: {
         left: '2%',
         right: '10%',
-        bottom: '10%',
+        bottom: '5%',
         containLabel: true
     },
     xAxis: {
@@ -337,7 +377,7 @@ option = {
     },
     yAxis: {
         type: 'category',
-        data: ['大唐', '华能', '浙能', '华东', '国电', '山东', '广东'],
+        data: ['大唐', '华能', '浙能', '华润', '国电', '国华'],
         axisLabel: {
             show: true,
             interval: 0,
@@ -366,11 +406,146 @@ option = {
                 color: '#fff'
             }
         },
-        data: [22, 33, 44, 55, 66, 77, 88]
+        data: [68, 64, 95, 66, 77, 88],
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均'}
+                ]
+            }
     }]
 };
 
 myChart32.setOption(option);
+
+
+
+optionbar1 = {
+    backgroundColor: '#034769',
+    title: {
+        text: '地区最高负荷',
+        left:'center'
+        //textStyle: {
+        //    color: '#fff'
+        //}
+    },
+    tooltip: {
+           trigger: 'item',
+            padding: 10,
+            backgroundColor: '#222',
+            borderColor: '#777',
+            borderWidth: 1,
+            formatter: tooltipFormatter
+    },
+    legend: {
+        //data:['评价分','大唐集团','华东集团']
+    },
+    grid: {
+        left: '2%',
+        right: '8%',
+        bottom: '5%',
+        containLabel: true
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['杭州','宁波','温州','嘉兴','绍兴','金华','台州','湖州','衢州','丽水','舟山'],
+            axisPointer: {
+                type: 'shadow'
+            },
+            axisLine: {
+                lineStyle: {
+                    type: 'solid',
+                    color: '#28316d',//左边线的颜色
+                    width:'1'//坐标线的宽度
+                }
+            },
+            axisLabel:  {
+                interval: 0,
+                //rotate:40,
+                show: true,
+                splitNumber: 15,
+                textStyle: {
+                    //fontFamily: "微软雅黑",
+                    fontSize: 14,
+                },
+            },
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '负荷(MW)',
+            min: 0,
+           // max: 12000,
+            //interval: 20,
+            splitLine: {                // 网格线 y轴对应的是否显示
+                show: false
+            },
+            axisLabel: {
+                formatter: '{value} '
+            }
+        }
+    ],
+    series: [
+        {
+            name:'地区负荷',
+            type:'bar',
+            data:[11160, 10049, 9870,5588,4433,6644,3665,4499,7737,5574,6643],
+            label: {
+                normal: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{c}'
+
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '20',
+                        fontWeight: 'normal'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 3,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+             markPoint : {
+              data: [
+                  {type: 'max', name: '最高'},
+                  {type: 'min', name: '最低'}
+              ]                
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均负荷'}
+                ]
+            }
+
+
+        }
+
+    ]
+};
+
+myChartbar1.setOption(optionbar1);
+
 
 option = {
      backgroundColor: '#034769',
@@ -438,6 +613,7 @@ option = {
 };
 myChart4.setOption(option);
 
+
 option = {
     title: {
         text: '全网负荷有功',
@@ -468,11 +644,12 @@ option = {
     yAxis: {
         type: 'value',
         name: '负荷(MW)',
-        min: 20000,
-        interval: 5000,
+        // min: 20000,
+        // interval: 5000,
         show:true
     },
     series: [{
+        name:'负荷',
         data: [ 25901, 33934, 41440, 43930,55440, 34932, 35901, 41934, 41290, 41300, 33901, 44934, 31440, 33930,44440, 29932, 38901, 39934, 51290, 31300, 41290, 51330, 31290, 31330,31111],
         type: 'line',
         smooth: true,
@@ -485,6 +662,222 @@ option = {
     }]
 };
 myChart5.setOption(option);
+
+
+//三大来源曲线图
+
+optionlines1 = {
+    title: {
+        text: '发电来源曲线图',
+        left: '3%'
+    },
+    legend: {
+        //orient: 'vertical',
+        // top:'30%',
+        // left:'0',
+        data: ['统调发电','省内发电','华东机组发电']
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    calculable : true,
+    backgroundColor: '#034769',
+        grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        data: ['00:00', '01:00', '02:00', '03:00','04:00', '05:00','06:00', '07:00','08:00', '09:00','10:00', '11:00','12:00','13:00','14:00', '15:00','16:00', '17:00','18:00','19:00', '20:00','21:00', '22:00', '23:00','24:00'],
+      scale: true,
+      boundaryGap: false,
+      axisLine: { onZero: false },
+      splitLine: { show: false },
+      splitNumber: 20,
+      min: 'dataMin',
+      max: 'dataMax'
+    },
+    yAxis: {
+        type: 'value',
+        name: '负荷(MW)',
+        //min: 20000,
+        //interval: 5000,
+        show:true
+    },
+    series: [{
+        name:'统调发电',
+        data: [ 35901, 43934, 31440, 33930,35440, 34932, 35901, 41934, 31290, 31300, 43901, 44934, 31440, 33930,44440, 39932, 38901, 39934, 51290, 31300, 41290, 41330, 31290, 31330,31111],
+        type: 'line',
+        smooth: true,
+        // markPoint: {
+        //       data: [
+        //           {type: 'max', name: '最大值'},
+        //           {type: 'min', name: '最小值'}
+        //       ]
+        //   },
+    },{
+        name:'省内发电',
+        data: [ 25901, 33934, 31440, 23930,25440, 34932, 35901, 21934, 21290, 31300, 23901, 24934, 31440, 33930,22240, 21932, 21901, 22934, 22340, 21300, 22390, 31330, 22290, 23330,23111],
+        type: 'line',
+        smooth: true,
+        // markPoint: {
+        //       data: [
+        //           {type: 'max', name: '最大值'},
+        //           {type: 'min', name: '最小值'}
+        //       ]
+        //   },
+    },{
+        name:'华东机组发电',
+        data: [ 21901, 22934, 11440, 12930,21440, 23932, 25901, 12934, 22290, 23300, 11901, 24934, 22440, 22930,13440, 21932, 18901, 19934, 21290, 11300, 21290, 11330, 21290, 21330,11111],
+        type: 'line',
+        smooth: true,
+        // markPoint: {
+        //       data: [
+        //           {type: 'max', name: '最大值'},
+        //           {type: 'min', name: '最小值'}
+        //       ]
+        //   },
+    }
+
+
+    ]
+};
+myChartlines1.setOption(optionlines1);
+
+
+
+//app.title = '柱状图框选';
+
+var xAxisData = [];
+var data1 = [];
+var data2 = [];
+
+for (var i = 0; i < 10; i++) {
+    xAxisData.push('电厂' + i);
+    data1.push((Math.random() * 10));
+    data2.push(-1);
+}
+
+var itemStyle = {
+    normal: {
+    },
+    emphasis: {
+        barBorderWidth: 1,
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: 'rgba(0,0,0,0.5)'
+    }
+};
+
+optionup1 = {
+    backgroundColor: '#034769',
+    legend: {
+        data: ['bar', 'bar2'],
+        align: 'left',
+        left: 10
+    },
+    brush: {
+        toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+        xAxisIndex: 0
+    },
+    toolbox: {
+        feature: {
+            magicType: {
+                type: ['stack', 'tiled']
+            },
+            dataView: {}
+        }
+    },
+    tooltip: {},
+    xAxis: {
+        data: xAxisData,
+        name: 'X Axis',
+        silent: false,
+        axisLine: {onZero: true},
+        splitLine: {show: false},
+        splitArea: {show: false}
+    },
+    yAxis: {
+        inverse: false,
+        splitArea: {show: false}
+    },
+    grid: {
+        left: 100
+    },
+    visualMap: {
+        show:false,
+        type: 'continuous',
+        dimension: 1,
+        text: ['High', 'Low'],
+        inverse: true,
+        itemHeight: 200,
+        calculable: true,
+        min: -1,
+        max: 24,
+        top: 60,
+        left: 10,
+        inRange: {
+            colorLightness: [0.4, 0.8]
+        },
+        outOfRange: {
+            color: '#bbb'
+        },
+        controller: {
+            inRange: {
+                color: '#2f4554'
+            }
+        }
+    },
+    series: [
+        {
+            name: 'bar',
+            type: 'bar',
+            stack: 'one',
+            itemStyle: itemStyle,
+            data: data1
+        },
+        {
+            name: 'bar2',
+            type: 'bar',
+            stack: 'one',
+            itemStyle: itemStyle,
+            data: data2
+        }
+    ]
+};
+
+myChartup1.on('brushSelected', renderBrushed);
+
+function renderBrushed(params) {
+    var brushed = [];
+    var brushComponent = params.batch[0];
+
+    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+        var rawIndices = brushComponent.selected[sIdx].dataIndex;
+        brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+    }
+
+    myChart.setOption({
+        title: {
+            backgroundColor: '#333',
+            text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+            bottom: 0,
+            right: 0,
+            width: 100,
+            textStyle: {
+                fontSize: 12,
+                color: '#fff'
+            }
+        }
+    });
+}
+
+
+myChartup1.setOption(optionup1);
+
 
 </script>
 

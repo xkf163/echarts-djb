@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <title>elc</title>
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: #034769;
+    }
+  </style>
+</head>
+<body style="overflow-x: hidden;padding: 5px">
+
+
+  <div class="container-fluid">
+  <div class="row">
+<!--     <blockquote class="blockquote-reverse">
+        <p style="color: white">华能玉环电厂</p>
+        <footer  style="color: white">位于<cite title="Source Title">浙江省台州市玉环县大麦屿开发区</cite>，地处浙江省东南沿海瓯江口，乐清湾东岸，玉环半岛西侧，厂址三面环山，一面临海。</footer>
+    </blockquote> -->
+    <table class="table">
+        <tr>
+            <td><cite title="Source Title"  style="color: grey">公司名称：</cite></td><td  style="color: white">华能玉环电厂</td>
+            <td><cite title="Source Title"   style="color: grey">经营范围：</cite></td><td  style="color: white">火力发电</td>
+            <td><cite title="Source Title"   style="color: grey">成立时间：</cite></td><td  style="color: white">2007年</td>
+            <td><cite title="Source Title"   style="color: grey">年发电量：</cite></td><td  style="color: white">220亿千瓦时</td>
+        </tr>
+    </table>
+  </div>
+
+
+  <div class="row">
+        <div  class="col-sm-9" id="up1" style="height:300px;">
+            <!-- 日报上报情况 -->
+        </div>
+        <div  class="col-sm-3" id="up2" style="height:300px;">
+            <!-- 集团日报上报情况 -->
+        </div>
+  </div>
+  
+
+
+</div>  
+<script src='./jquery.min.js'></script>
+<script src='./echarts.min.js'></script>
+<script src="./dark.js"></script>
+<script src='./zhejiang.js'></script>
+
+
+<script>  
+    var myChart1 = echarts.init(document.getElementById('main1'),'dark');
+
+</script>
+
+</body>
+</html>  

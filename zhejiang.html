@@ -53,8 +53,8 @@
     </div>
     </div>
     <div class="row">
-      <div class="col-md-4" id="main" style="height:600px"></div>
-      <div class="col-md-8" style="height:768px">
+      <div class="col-md-4" id="main" style="height:550px"></div>
+      <div class="col-md-8" style="height:550px">
         <iframe src="all.html" name="iframe_a" frameborder="0" style="width:100%;height:95%"></iframe>
       </div>
     </div>
@@ -66,7 +66,7 @@
 <script>  
 var zoom = 1; //地图放大级别
 var myChart = echarts.init(document.getElementById('main'),'dark');
-var chartData = [{name:'玉环电厂',value:[121.150877,28.100905,2],symbol:'circle',symbolSize :20},
+var chartData = [{name:'玉环电厂',value:[121.150877,28.100905,2],symbol:'circle',symbolSize :20,info:'机组1#开<br>机组2#关'},
                 {name:'台州发电厂',value:[121.467133,28.705202,2],symbol:'circle',symbolSize :15},
                 {name:'紧水滩',value:[119.542836,28.216605,1],symbol:'circle',symbolSize :5},
                 {name:'北仑电厂',value:[121.818637,29.942776,2],symbol:'circle'},
@@ -214,7 +214,7 @@ function tooltipFormatter(params) {
                 '</div>' +
                 '<span style="color:' +
                 params.color +
-                '">' + params.name + '</span>: ' + params.value);
+                '">' + params.name + '</span>: ' + params.info);
     return valuesFormatter;
 }
 
@@ -222,8 +222,8 @@ function tooltipFormatter(params) {
   var option = {
     backgroundColor: '#034769',
     title: {
-        text: '浙江分布图',
-        subtext: 'data of zhejiang',
+        text: ' 浙江 ',
+        subtext: 'zhejiang',
         // sublink: 'https://www.macrofocus.com/public/products/infoscope/datasets/pricesandearnings/',
         left: 'left',
         top: 20,
@@ -535,7 +535,7 @@ function tooltipFormatter(params) {
       console.log(params);
       if(params.componentType == "series" & params.seriesType == "effectScatter"){
           //window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
-          $('iframe').attr('src','https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+          $('iframe').attr('src','elc.html?wd=' + encodeURIComponent(params.name));
       }
       
       if(params.componentType == "geo"){
@@ -560,11 +560,6 @@ function tooltipFormatter(params) {
   });
 
 
- 
-
- myChart.on('geoselectchanged', function (params) {
-    console.log("geoselectchanged ");
-  });
   myChart.on('dblclick', function (params) {
       //双击地图区域放大缩小
       //console.log(option.geo);

@@ -33,10 +33,14 @@
   </div>
 
   <div class="row">
-        <div id="up1" style="height:500px;">
+        <div  class="col-sm-9" id="up1" style="height:300px;">
             <!-- 日报上报情况 -->
         </div>
+        <div  class="col-sm-3" id="up2" style="height:300px;">
+            <!-- 集团日报上报情况 -->
+        </div>
   </div>
+  <!-- pei -->
   <div class="row">
       <div class="col-sm-6">
         <div id="main1" style="height:300px;">
@@ -46,10 +50,28 @@
          <div id="main2" style="height:300px;">
         </div>
       </div>
-  </div>
 </div>
 <div class="row">
-        <div id="main4" style="height:300px;">
+      <div class="col-sm-12">
+        <div id="pei-nest" style="height:350px;">
+        </div>
+      </div>
+</div>
+<div class="row">
+      <div class="col-sm-12">
+        <div id="bar-line" style="height:500px;">
+        </div>
+      </div>
+</div>
+<div class="row">
+      <div class="col-sm-12">
+        <div id="barNeg" style="height:500px;">
+        </div>
+      </div>
+</div>
+
+<div class="row">
+        <div id="main4" style="height:500px;">
         </div>
 </div>
 <div class="row">
@@ -66,9 +88,18 @@
 </div>  
 <script src='./jquery.min.js'></script>
 <script src='./echarts.min.js'></script>
-<script src="./vintage.js"></script>
 <script src="./dark.js"></script>
 <script src='./zhejiang.js'></script>
+
+<!-- 嵌套环形图 -->
+<script type="text/javascript" src="./js/pei-nest.js"></script>
+<!-- 正负条形图 -->
+<script type="text/javascript" src="./js/bar-negative.js"></script>
+<!-- 正负条形图 集团日报上报情况-->
+<script type="text/javascript" src="./js/bar-neg-groupup.js"></script>
+
+<script type="text/javascript" src="./js/bar-line.js"></script>
+<!-- <script type="text/javascript" src="./js/pie-line-dataset-link.js"></script> -->
 <script>  
     var myChart1 = echarts.init(document.getElementById('main1'),'dark');
     var myChart2 = echarts.init(document.getElementById('main2'),'dark');
@@ -88,7 +119,7 @@
 var option = {
     backgroundColor: '#034769',
     title : {
-        text: '机组容量(MW)',
+        text: '机组类型(MW)',
         top:'20'
     },
     tooltip : {
@@ -99,11 +130,11 @@ var option = {
         orient: 'vertical',
         top:'30%',
         left:'0',
-        data: ['火电','燃气','水电','风电','光伏','核电']
+        data: ['水电','火电','核电','风电','太阳能','其他']
     },
     series : [
         {
-            name: '访问来源',
+            name: '机组类型',
             type: 'pie',
             radius : '50%',
             center: ['60%', '50%'],
@@ -117,12 +148,12 @@ var option = {
             itemStyle :{
             },
             data:[
-                {value:335, name:'水电'},
-                {value:310, name:'风电'},
-                {value:234, name:'光伏'},
-                {value:135, name:'核电'},
-                {value:234, name:'燃气'},
-                {value:1548, name:'火电'}
+                {value:25, name:'水电'},
+                {value:1, name:'风电'},
+                {value:2, name:'太阳能'},
+                {value:3, name:'核电'},
+                {value:1, name:'其他'},
+                {value:77, name:'火电'}
             ]
 
         }
@@ -550,14 +581,14 @@ myChartbar1.setOption(optionbar1);
 option = {
      backgroundColor: '#034769',
     title: {
-        text: '折线图堆叠',
-        left: '3%'
+        text: '各发电企业今日隐患（问题）情况',
+        left: '1%'
     },
     tooltip: {
         trigger: 'axis'
     },
     legend: {
-        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+        data:['隐患新增','隐患消除','问题新增','问题削减']
     },
     grid: {
         left: '3%',
@@ -573,41 +604,45 @@ option = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一','周二','周三','周四','周五','周六','周日']
+        data: ['台州厂','温二厂','温州厂','乌沙山','萧山厂','玉环厂','镇海厂','舟山厂','衢化厂','半燃厂','德能厂','华舜厂','蓝天厂','龙湾厂','黄水厂','紧水厂','石水厂'],
+        axisLabel:  {
+                interval: 0,
+                rotate:40,
+                show: true,
+                //splitNumber: 15,
+                textStyle: {
+                    //fontFamily: "微软雅黑",
+                    fontSize: 12,
+                },
+            }
     },
     yAxis: {
         type: 'value'
     },
     series: [
         {
-            name:'邮件营销',
+            name:'隐患新增',
             type:'line',
             stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
+            data:[1, 0, 2, 1, 3, 2, 0 ,1, 1, 1, 1, 3, 2, 0, 1, 1, 1]
         },
         {
-            name:'联盟广告',
+            name:'隐患消除',
             type:'line',
             stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
+            data:[1, 3, 3, 1, 2, 2, 0, 3, 5, 1, 2, 3, 2, 2, 1, 3, 1]
         },
         {
-            name:'视频广告',
+            name:'问题新增',
             type:'line',
             stack: '总量',
-            data:[150, 232, 201, 154, 190, 330, 410]
+            data:[3, 2, 0 ,1, 5, 1, 5, 4, 1, 1, 1, 3, 2, 0, 4, 1, 1]
         },
         {
-            name:'直接访问',
+            name:'问题削减',
             type:'line',
             stack: '总量',
-            data:[320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-            name:'搜索引擎',
-            type:'line',
-            stack: '总量',
-            data:[820, 932, 901, 934, 1290, 1330, 1320]
+            data:[1, 1, 3, 4, 2, 2, 1, 5, 1, 4, 3, 3, 2, 0 , 1, 4, 1]
         }
     ]
 };
@@ -751,8 +786,9 @@ myChartlines1.setOption(optionlines1);
 //app.title = '柱状图框选';
 
 var xAxisData = ['台州厂','温二厂','温州厂','乌沙山','萧山厂','玉环厂','镇海厂','舟山厂','衢化厂','半燃厂','德能厂','华舜厂','蓝天厂','龙湾厂','黄水厂','紧水厂','石水厂'];
-var data1 = [0,9.5,0,0,12,12,10,0,0,0,10.5,8.5,9,8.8,9.5,11.3,0];
-var data2 = [-1,0,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,-1];
+var data1 = [0,0,0,0,12,12,10,0,0,0,10.5,8.5,9,8.8,9.5,11.3,0];
+var data2 = [-1,-1,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,-1];
+
 
 for (var i = 0; i < 16; i++) {
     //xAxisData.push('电厂' + i);
@@ -760,8 +796,23 @@ for (var i = 0; i < 16; i++) {
     //data2.push(-1);
 }
 
+function setbarcolors(params) {
+    console.log("setcolors:::");
+    var color = '#759aa0';
+
+    if (params.value == -1) {
+        color = '#dd6b66';
+    }
+
+    if (params.value > 10) {
+        color = '#e69d87';
+    };
+    return color;
+}
+
 var itemStyle = {
     normal: {
+        color: setbarcolors
     },
     emphasis: {
         barBorderWidth: 1,
@@ -778,6 +829,12 @@ optionup1 = {
         left: 'center'
     },
     backgroundColor: '#034769',
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '5%',
+        containLabel: true
+    },
     // legend: {
     //     data: ['bar', 'bar2'],
     //     align: 'left',
@@ -786,14 +843,6 @@ optionup1 = {
     brush: {
         toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
         xAxisIndex: 0
-    },
-    toolbox: {
-        feature: {
-            magicType: {
-                type: ['stack', 'tiled']
-            },
-            dataView: {}
-        }
     },
     tooltip: {},
     xAxis: {
@@ -817,11 +866,10 @@ optionup1 = {
     },
     yAxis: {
         name: '上报时间',
+        type:'value',
         inverse: false,
-        splitArea: {show: false}
-    },
-    grid: {
-        left: 100
+        splitArea: {show: false},
+        interval: 6
     },
     visualMap: {
         show:false,
@@ -849,14 +897,14 @@ optionup1 = {
     },
     series: [
         {
-            name: 'bar',
+            name: '上报时间：',
             type: 'bar',
             stack: 'one',
             itemStyle: itemStyle,
             data: data1
         },
         {
-            name: 'bar2',
+            name: '',
             type: 'bar',
             stack: 'one',
             itemStyle: itemStyle,
@@ -893,6 +941,8 @@ function renderBrushed(params) {
 
 
 myChartup1.setOption(optionup1);
+
+
 
 
 </script>
